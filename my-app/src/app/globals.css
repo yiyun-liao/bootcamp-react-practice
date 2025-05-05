@@ -38,4 +38,5 @@ main{
   align-items: center;
   justify-content: flex-start;
   gap: 40px;
+  padding-bottom: 80px;
 }

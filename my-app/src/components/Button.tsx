@@ -1,5 +1,9 @@
-export default function Button({children, variant= 'solid', width = 'fit', ...props}){
-    //variant=['solid', 'text-button'];
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    variant?: 'solid' | 'text-button';
+    width?: 'full' | 'fit';
+  }
+
+export default function Button({children, variant= 'solid', width = 'fit', ...props}:ButtonProps){
   
     let style = "px-3 py-2 font-semibold uppercase rounded overflow-hidden whitespace-nowrap"
 

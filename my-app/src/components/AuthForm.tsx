@@ -10,47 +10,58 @@ interface FormProps {
 export default function AuthForm({type}:FormProps){
     const [enteredEmail, setEnteredEmail] = useState('');
     const [enteredPassword, setEnteredPassword] = useState('');
-    const [submitted, setSubmitted] = useState(false);
+    const [submitted, setSubmitted] = useState(true);
+    
 
-    function handleInputChange(identifier:string, value:string) {
-      if (identifier === 'email') {
-        setEnteredEmail(value);
-      } else {
-        setEnteredPassword(value);
-      }
-    }
+    const emailEmpty = enteredEmail.trim() === '';
+    const emailInvalid = !enteredEmail.includes('@');
+    const passwordEmpty = enteredPassword.trim() === '';
+    const passwordInvalid = enteredPassword.length < 6;
 
+    const showEmailError = !submitted && (emailEmpty || emailInvalid);
+    const showPasswordError = !submitted && (passwordEmpty || passwordInvalid);
+
+    const emailErrorMessage = emailEmpty ? '帳號不得空白' :
+        emailInvalid ? '帳號不正確' : '';
+
+    const passwordErrorMessage = passwordEmpty ? '密碼不得空白' :
+        passwordInvalid ? '密碼不得少於六個字元' : '';
+
+    const formInvalid = emailEmpty || emailInvalid || passwordEmpty || passwordInvalid;
+    
     function handleSubmit(e: React.FormEvent){
         e.preventDefault();
-        setSubmitted(true);
+        if (!formInvalid) {
+            setSubmitted(true);
+            console.log(type, '送出資料：', { email: enteredEmail, password: enteredPassword });
+        }else{
+            setSubmitted(false);
+        }
     }
 
-    const emailNotValid = submitted && !enteredEmail.includes('@');
-    const passwordNotValid = submitted && enteredPassword.trim().length < 6;
 
     return(
         <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-2 mb-6">
                 <Input
                     label = 'Email'
-                    invalid={emailNotValid}
+                    invalid={showEmailError}
                     type="email"
-                    onChange={(event) => handleInputChange('email', event.target.value)}
+                    value={enteredEmail}
+                    errorMessage={showEmailError ? emailErrorMessage : ''}
+                    onChange={(e) => setEnteredEmail(e.target.value)}
                     />
                 <Input
                     label = 'Password'
-                    invalid={passwordNotValid} 
+                    invalid={showPasswordError} 
                     type="password"
-                    onChange={(event) => handleInputChange('password', event.target.value)}
+                    value={enteredPassword}
+                    errorMessage={showPasswordError ? passwordErrorMessage : ''}
+                    onChange={(e) => setEnteredPassword(e.target.value)}
                     />
             </ div>
             <div className="flex justify-end gap-2">
-                <Button 
-                    variant="solid" 
-                    width='full' 
-                    type="submit"
-                    children={type}
-                    />
+                <Button variant="solid" width='full' type="submit">{type}</Button>
             </div>
         </form>
     )
