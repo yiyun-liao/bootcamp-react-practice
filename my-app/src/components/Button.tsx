@@ -1,5 +1,5 @@
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-    children: string;
+    children: React.ReactNode;
     variant: 'solid' | 'text-button';
     width: 'full' | 'fit';
   }

@@ -1,6 +1,5 @@
 'use client'
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Input from '../Input';
 import Button from '../Button';
 import { validateEmail,validatePassword,signUpCheck } from './auth-utils';
