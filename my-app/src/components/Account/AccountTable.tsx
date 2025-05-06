@@ -4,13 +4,7 @@ import Button from "../Button";
 import Input from "../Input";
 import Select from "../Select";
 
-const data = {
-    0: [+100, 'Positive revenue'],
-    1: [-100, 'Refund for failed transaction'],
-    2: [+100, 'className="overflow-x-auto p-4className="overflow-x-auto p-4className='],
-    3: [-10, 'Short refund'],
-    4: [+100, 'Revenue from Product X - Extended description that is long enough to overflow the column'] 
-}
+
 
 const selectOption = {
     "add": "+",
@@ -20,14 +14,51 @@ const selectOption = {
 
 
 export default function AccountTable(){
-    const [addMathSymbol, setAddMathSymbol] = useState('');
+    const [addMathSymbol, setAddMathSymbol] = useState('add');
     const [addAmount, setAddAmount] = useState('');
     const [addDesc, setAddDesc] = useState('');
+    const [data, setData] = useState({
+        0: [+100, 'Positive revenue'],
+        1: [-100, 'Refund for failed transaction'],
+        2: [+100, 'className="overflow-x-auto p-4className="overflow-x-auto p-4className='],
+        3: [-10, 'Short refund'],
+        4: [+100, 'Revenue from Product X - Extended description that is long enough to overflow the column'] 
+    });
 
     const addExpenseStyle = "flex gap-2 flex-wrap p-4  max-w-2xl"
     const addTotalStyle = "p-4 max-w-2xl text-center bg-indigo-100 w-full rounded-lg"
 
+    // ------------- 新增資料 ------------
+    function handleAddExpense(){
+        if (!addMathSymbol || !addAmount || !addDesc) return alert('請重新編輯');
 
+        const symbol = addMathSymbol === 'minus' ? -1 : 1;
+        const newAmount = symbol * Number(addAmount);
+        const newKey = Math.max(...Object.keys(data).map(Number)) + 1;
+
+        console.log("新增資料", newKey, newAmount);
+        setData(prev => ({
+            ...prev,
+            [newKey]:[newAmount, addDesc]
+        }));
+
+        setAddAmount('');
+        setAddDesc('');
+        setAddMathSymbol('add');
+    }
+
+    // ------------- 刪除資料 ------------
+    function handleDeleteExpense(deleteKey:number){
+        const newData = {...data};
+        delete newData[deleteKey];
+        setData(newData);
+        const userId =1;
+
+        console.log("刪除資料", deleteKey, userId)
+        console.log(data)
+    }
+
+    // ------------- 渲染圖表 ------------
     function tableResult(){
         const tdRevenueStyle = "px-4 py-2 w-fit max-w-[80px]";
         const tdDescriptionStyle = "px-4 py-2 min-w-[80px] max-w-[400px] break-words whitespace-normal";
@@ -43,7 +74,9 @@ export default function AccountTable(){
                     <td className={`${tdActiveStyle}`}>                
                         <Button 
                             variant="text-button" 
-                            width='full'>
+                            width='full'
+                            key={key}
+                            onClick={() => handleDeleteExpense(key)}>
                                 Delete
                         </Button>
                     </td>
@@ -52,16 +85,18 @@ export default function AccountTable(){
         })
     }
 
+    // ------------- 計算總額 ------------
     function totalResult(){
         let total = 0;
         Object.entries(data).forEach(([_, [amount]]) => {
             total += amount;
-            console.log('add', total)           
         })
-        let totalClass = "text-zinc-900 text-sm font-bold"
+        let totalClass = "text-sm font-bold"
         if(total < 0) {
             totalClass += " text-red-600";
-        } 
+        }else{
+            totalClass += " text-zinc-900";
+        }
         return(
             <p className={totalClass}>小計: {total}</p>
         )
@@ -99,7 +134,8 @@ export default function AccountTable(){
                     <Button 
                         variant="solid" 
                         width='full' 
-                        type="submit" >
+                        type="submit"
+                        onClick={handleAddExpense} >
                             新增紀錄
                     </Button>
                 </div>
