@@ -4,7 +4,8 @@ import Button from "../Button";
 import Input from "../Input";
 import Select from "../Select";
 
-
+type DataEntry = [number, string];
+type Data = Record<number, DataEntry>;
 
 const selectOption = {
     "add": "+",
@@ -17,7 +18,7 @@ export default function AccountTable(){
     const [addMathSymbol, setAddMathSymbol] = useState('add');
     const [addAmount, setAddAmount] = useState('');
     const [addDesc, setAddDesc] = useState('');
-    const [data, setData] = useState({
+    const [data, setData] = useState<Data>({
         0: [+100, 'Positive revenue'],
         1: [-100, 'Refund for failed transaction'],
         2: [+100, 'className="overflow-x-auto p-4className="overflow-x-auto p-4className='],
@@ -76,7 +77,7 @@ export default function AccountTable(){
                             variant="text-button" 
                             width='full'
                             key={key}
-                            onClick={() => handleDeleteExpense(key)}>
+                            onClick={() => handleDeleteExpense(Number(key))}>
                                 Delete
                         </Button>
                     </td>
@@ -88,7 +89,7 @@ export default function AccountTable(){
     // ------------- 計算總額 ------------
     function totalResult(){
         let total = 0;
-        Object.entries(data).forEach(([_, [amount]]) => {
+        Object.entries(data).forEach(([, [amount]]) => {
             total += amount;
         })
         let totalClass = "text-sm font-bold"
