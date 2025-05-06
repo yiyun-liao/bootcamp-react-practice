@@ -25,6 +25,8 @@ export default function AccountTable(){
     const [addDesc, setAddDesc] = useState('');
 
     const addExpenseStyle = "flex gap-2 flex-wrap p-4  max-w-2xl"
+    const addTotalStyle = "p-4 max-w-2xl text-center bg-indigo-100 w-full rounded-lg"
+
 
     function tableResult(){
         const tdRevenueStyle = "px-4 py-2 w-fit max-w-[80px]";
@@ -48,6 +50,21 @@ export default function AccountTable(){
                 </tr>
             )
         })
+    }
+
+    function totalResult(){
+        let total = 0;
+        Object.entries(data).forEach(([_, [amount]]) => {
+            total += amount;
+            console.log('add', total)           
+        })
+        let totalClass = "text-zinc-900 text-sm font-bold"
+        if(total < 0) {
+            totalClass += " text-red-600";
+        } 
+        return(
+            <p className={totalClass}>小計: {total}</p>
+        )
     }
 
     return(
@@ -106,6 +123,9 @@ export default function AccountTable(){
                         {tableResult()}
                     </tbody>
                 </table>	
+            </div>
+            <div className={addTotalStyle}>
+                {totalResult()}
             </div>
         </>
     )
