@@ -5,7 +5,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 export default function Button({children, variant= 'solid', width = 'fit', ...props}:ButtonProps){
   
-    let style = "px-3 py-2 font-semibold uppercase rounded overflow-hidden whitespace-nowrap"
+    let style = "px-3 py-2 font-semibold rounded overflow-hidden whitespace-nowrap"
 
     if (width === 'full'){
         style += " w-full"
