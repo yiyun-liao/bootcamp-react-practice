@@ -1,6 +1,6 @@
 import SignInForm from '@/components/Auth/SignInForm';
 import SignUpForm from '@/components/Auth/SignUpForm';
-import LogOutForm from '@/components/Auth/temo';
+import LogOutForm from '@/components/Auth/SignOutForm';
 
 const Page: React.FC = () => {
     const authForm = "max-w-sm w-full";
