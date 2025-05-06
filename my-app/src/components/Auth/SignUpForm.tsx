@@ -1,12 +1,15 @@
 'use client'
 import { useState } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import Input from '../Input';
 import Button from '../Button';
 import { validateEmail,validatePassword,signUpCheck } from './auth-utils';
 
+interface SignUpFormProps {
+    type?: string;
+}
 
-export default function SignUpForm({type}){
+export default function SignUpForm({type}:SignUpFormProps){
     const [enteredEmail, setEnteredEmail] = useState('');
     const [enteredPassword, setEnteredPassword] = useState('');
     const [submitted, setSubmitted] = useState(true);

@@ -38,6 +38,7 @@ main{
   justify-content: flex-start;
   gap: 40px;
   padding-bottom: 80px;
+  min-width: 360px;
 }
 
 .banner{
@@ -49,4 +50,32 @@ main{
   flex-direction: column;
   justify-content: center;
   align-items:center;
+}
+
+
+table {
+  text-align: left;
+  border-collapse: collapse;
+  padding: 8px 4px;
+
+}
+
+caption {
+  text-align: center;
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-indigo-500);
+  padding: 8px 4px;
+}
+
+/*基數行顏色比較深*/
+table tr:nth-child(even){
+  background-color: var(--color-indigo-50);
+  color: var(--color-zinc-900);
+}
+
+/*hover 時整行顏色比較深*/
+table tr:hover{
+  background-color: var(--color-indigo-200);
+  color: var(--color-zinc-900);
 }
