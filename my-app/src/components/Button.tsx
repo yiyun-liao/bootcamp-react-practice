@@ -1,7 +1,7 @@
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-    children?: string;
-    variant?: 'solid' | 'text-button';
-    width?: 'full' | 'fit';
+    children: string;
+    variant: 'solid' | 'text-button';
+    width: 'full' | 'fit';
   }
 
 export default function Button({children, variant= 'solid', width = 'fit', ...props}:ButtonProps){
