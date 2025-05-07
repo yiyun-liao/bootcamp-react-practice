@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Button from "../Button";
 import Input from "../Input";
 import Select from "../Select";
-import { addExpenseData, readExpenseData } from "@/components/Account/Account"
+import { addExpenseData, readExpenseData, deleteExpenseData} from "@/components/Account/Account"
 
 type DataEntry = [number, string];
 type Data = Record<string, DataEntry>;
@@ -39,13 +39,9 @@ export default function AccountTable(){
     }
 
     // ------------- 刪除資料 ------------
-    function handleDeleteExpense(deleteKey:number){
-        const newData = {...data};
-        delete newData[deleteKey];
-        setData(newData);
-        const userId =1;
-
-        console.log("刪除資料", deleteKey, userId)
+    function handleDeleteExpense(deleteKey:string){
+        deleteExpenseData(deleteKey);
+        console.log("刪除資料", deleteKey)
         console.log(data)
     }
 
@@ -76,7 +72,7 @@ export default function AccountTable(){
                             variant="text-button" 
                             width='full'
                             key={key}
-                            onClick={() => handleDeleteExpense(Number(key))}>
+                            onClick={() => handleDeleteExpense(String(key))}>
                                 Delete
                         </Button>
                     </td>

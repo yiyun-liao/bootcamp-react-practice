@@ -1,6 +1,6 @@
-import { db, collection, addDoc, query, where, getDocs, onSnapshot, orderBy,serverTimestamp } from "../../../firebase.js"; // 載入 firebase 配置
+import { db, collection, addDoc, query, where, getDocs, doc,deleteDoc, onSnapshot, orderBy, serverTimestamp } from "../../../firebase.js"; // 載入 firebase 配置
 
-// 新增資料到
+// 新增資料
 async function addExpenseData(userId:number, amount:number,desc:string){
     try {
         await addDoc(collection(db, "expenses"), {
@@ -44,4 +44,13 @@ function readExpenseData(userId:number, callback: (data: Data) => void): (() => 
     return unsubscribe; // ✅ 可用於 useEffect 的清除函式
 }
 
-export {addExpenseData, readExpenseData};
+// 新增資料
+async function deleteExpenseData(key:string){
+    try {
+        await deleteDoc(doc(db, "expenses", key));
+    } catch (error) {
+        console.error("Error adding document: ", error);
+    }
+};
+
+export {addExpenseData, readExpenseData, deleteExpenseData};
