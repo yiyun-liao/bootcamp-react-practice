@@ -1,3 +1,5 @@
+//------ practice ------
+
 'use client';
 import { db, setDoc, collection, getDocs, getDoc, addDoc, deleteDoc, doc, updateDoc, onSnapshot, query, where, limit } from "../../firebase.js"; // 載入 firebase 配置
 
@@ -51,7 +53,7 @@ export default function TestFirebase(){
         const docRef = doc(db, 'dailySpecial', '2021-09-14');
         try {
             const mySnapshot = await getDoc(docRef);
-            onSnapshot(docRef,)
+            onSnapshot(docRef)
             if (mySnapshot.exists()){
                 const docData = mySnapshot.data();
                 const data = JSON.stringify(docData);
