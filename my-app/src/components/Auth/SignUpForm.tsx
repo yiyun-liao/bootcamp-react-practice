@@ -18,7 +18,7 @@ export default function SignUpForm({type}:SignUpFormProps){
     const showPasswordError = validatePassword(enteredPassword);
     const formInvalid = !!showEmailError || !!showPasswordError;
     
-    function handleSubmit(e: React.FormEvent){
+    async function handleSubmit(e: React.FormEvent){
         e.preventDefault();
 
         if (formInvalid) {
@@ -26,9 +26,10 @@ export default function SignUpForm({type}:SignUpFormProps){
             return;
         }
         
-        if(!signUpCheck(enteredEmail, enteredPassword)){
+        const result = await signUpCheck(enteredEmail, enteredPassword);
+        if(result.success){
             setSubmitted(true);
-            console.log(type,'sign up success', '送出資料：', { email: enteredEmail, password: enteredPassword });
+            console.log('sign up success:', result.data.uid);
         }else{
             console.log('Sign up fail');
             alert('Sign up fail');
@@ -52,6 +53,7 @@ export default function SignUpForm({type}:SignUpFormProps){
                     type="password"
                     value={enteredPassword}
                     invalid={!submitted && !!showPasswordError}
+                    autoComplete='new-password'
                     errorMessage={!submitted && showPasswordError ? showPasswordError : ''}
                     onChange={(e) => setEnteredPassword(e.target.value)}
                     />

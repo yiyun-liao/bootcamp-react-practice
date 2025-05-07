@@ -1,7 +1,8 @@
-import { db, collection, addDoc, query, where, getDocs, doc,deleteDoc, onSnapshot, orderBy, serverTimestamp } from "../../../firebase.js"; // 載入 firebase 配置
+import { collection, addDoc, query, where, doc,deleteDoc, onSnapshot, orderBy, serverTimestamp } from 'firebase/firestore';
+import { db } from '../../../firebase';
 
 // 新增資料
-async function addExpenseData(userId:number, amount:number,desc:string){
+async function addExpenseData(userId:string, amount:number,desc:string){
     try {
         await addDoc(collection(db, "expenses"), {
             userId: userId,
@@ -19,7 +20,7 @@ type DataEntry = [number, string];
 type Data = Record<string, DataEntry>;
 
 //讀取資料 query search
-function readExpenseData(userId:number, callback: (data: Data) => void): (() => void) | undefined {
+function readExpenseData(userId:string, callback: (data: Data) => void): (() => void) | undefined {
 
     if (!userId) return;
 
@@ -44,7 +45,7 @@ function readExpenseData(userId:number, callback: (data: Data) => void): (() => 
     return unsubscribe; // ✅ 可用於 useEffect 的清除函式
 }
 
-// 新增資料
+// 刪除資料
 async function deleteExpenseData(key:string){
     try {
         await deleteDoc(doc(db, "expenses", key));

@@ -1,6 +1,7 @@
 'use client';
 import Button from "../Button"
 import { useRouter } from 'next/navigation';
+import { logOutUser } from "./auth-utils";
 
 
 interface LogOutFormProps {
@@ -13,12 +14,19 @@ export default function LogOutForm({type}:LogOutFormProps){
     function redirectPage(){
         router.push('/account');    
     }
+
+    async function handleLogOut() {
+        await logOutUser();
+        console.log('Logged out!');
+    }
     return(
         <div>
             <div className="flex justify-end gap-2">
                 <Button 
                     variant="text-button" 
-                    width='full' >
+                    width='full'
+                    onClick={handleLogOut} 
+                    >
                         {type}
                 </Button>
                 <Button 

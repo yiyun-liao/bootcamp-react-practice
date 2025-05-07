@@ -1,5 +1,4 @@
 //------ practice ------
-
 'use client';
 import { db, setDoc, collection, getDocs, getDoc, addDoc, deleteDoc, doc, updateDoc, onSnapshot, query, where, limit } from "../../firebase.js"; // 載入 firebase 配置
 

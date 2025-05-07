@@ -18,7 +18,7 @@ export default function SignInForm({type}:SignInFormProps){
     const showPasswordError = validatePassword(enteredPassword);
     const formInvalid = !!showEmailError || !!showPasswordError;
     
-    function handleSubmit(e: React.FormEvent){
+    async function handleSubmit(e: React.FormEvent){
         e.preventDefault();
 
         if (formInvalid) {
@@ -26,9 +26,11 @@ export default function SignInForm({type}:SignInFormProps){
             return;
         }
         
-        if(signInCheck(enteredEmail, enteredPassword)){
+        const success = await signInCheck(enteredEmail, enteredPassword);
+        if(success){
+            console.log(success)
             setSubmitted(true);
-            console.log(type,'log in success', '送出資料：', { email: enteredEmail, password: enteredPassword });
+            console.log(type,'log in success');
         }else{
             console.log('log in fail');
             alert('log in fail');
@@ -52,6 +54,7 @@ export default function SignInForm({type}:SignInFormProps){
                     type="password"
                     value={enteredPassword}
                     invalid={!submitted && !!showPasswordError}
+                    autoComplete='new-password'
                     errorMessage={!submitted && showPasswordError ? showPasswordError : ''}
                     onChange={(e) => setEnteredPassword(e.target.value)}
                     />
