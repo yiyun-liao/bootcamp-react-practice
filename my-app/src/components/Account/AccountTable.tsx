@@ -3,6 +3,7 @@ import { useState } from "react";
 import Button from "../Button";
 import Input from "../Input";
 import Select from "../Select";
+import { db, collection, addDoc } from "../../../firebase.js"; // 載入 firebase 配置
 
 type DataEntry = [number, string];
 type Data = Record<number, DataEntry>;
@@ -11,8 +12,6 @@ const selectOption = {
     "add": "+",
     "minus":"-"
 }
-
-
 
 export default function AccountTable(){
     const [addMathSymbol, setAddMathSymbol] = useState('add');
@@ -30,19 +29,25 @@ export default function AccountTable(){
     const addTotalStyle = "p-4 max-w-2xl text-center bg-indigo-100 w-full rounded-lg"
 
     // ------------- 新增資料 ------------
-    function handleAddExpense(){
+    async function handleAddExpense(){
         if (!addMathSymbol || !addAmount || !addDesc) return alert('請重新編輯');
 
         const symbol = addMathSymbol === 'minus' ? -1 : 1;
         const newAmount = symbol * Number(addAmount);
-        const newKey = Math.max(...Object.keys(data).map(Number)) + 1;
+        // const newKey = Math.max(...Object.keys(data).map(Number)) + 1;
 
-        console.log("新增資料", newKey, newAmount);
-        setData(prev => ({
-            ...prev,
-            [newKey]:[newAmount, addDesc]
-        }));
-
+        try {
+            // 新增資料到 Firestore
+            await addDoc(collection(db, "expenses"), {
+                amount: newAmount,
+                description: addDesc,
+                timestamp: new Date(),
+            });
+            console.log("add success", newAmount)
+        } catch (error) {
+            console.error("Error adding document: ", error);
+        }
+        // 清空表單
         setAddAmount('');
         setAddDesc('');
         setAddMathSymbol('add');
@@ -108,7 +113,7 @@ export default function AccountTable(){
             <div id="addExpense" className={addExpenseStyle}>
                 <Select
                     id="amountSymbol"
-                    label = '金額'
+                    label = '支出/收入'
                     value={addMathSymbol}
                     optionData={selectOption}
                     //invalid={!submitted && !!showPasswordError}
