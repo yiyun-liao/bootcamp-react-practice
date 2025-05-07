@@ -1,6 +1,6 @@
+'use client';
 //------ practice ------
 
-'use client';
 import TestFirebase from "@/components/TestFirebase";
 
 
