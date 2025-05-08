@@ -45,8 +45,8 @@ export default function AccountTable(){
     // ------------- 刪除資料 ------------
     function handleDeleteExpense(deleteKey:string){
         deleteExpenseData(deleteKey);
-        console.log("刪除資料", deleteKey)
-        console.log(data)
+        // console.log("刪除資料", deleteKey)
+        // console.log(data)
     }
 
     // ------------- 渲染圖表 ------------
@@ -110,24 +110,18 @@ export default function AccountTable(){
                     label = '支出/收入'
                     value={addMathSymbol}
                     optionData={selectOption}
-                    //invalid={!submitted && !!showPasswordError}
-                    //errorMessage={!submitted && showPasswordError ? showPasswordError : ''}
                     onChange={(e) => setAddMathSymbol(e.target.value)}
                 />
                 <Input
                     label = '金額'
                     type="number"
                     value={addAmount}
-                    //invalid={!submitted && !!showPasswordError}
-                    //errorMessage={!submitted && showPasswordError ? showPasswordError : ''}
                     onChange={(e) => setAddAmount(e.target.value)}
                 />
                 <Input
                     label = '支出明細'
                     type="text"
                     value={addDesc}
-                    //invalid={!submitted && !!showPasswordError}
-                    //errorMessage={!submitted && showPasswordError ? showPasswordError : ''}
                     onChange={(e) => setAddDesc(e.target.value)}
                 />
                 <div className="pt-8">

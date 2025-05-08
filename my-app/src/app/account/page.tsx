@@ -6,7 +6,7 @@ import { useUser } from '@/components/Auth/auth-utils';
 import { useEffect } from "react";
 
 
-const AccountPage: React.FC = () => {
+const AccountPage = () => {
     const router = useRouter();
     const { userData, isLoading } = useUser();
 

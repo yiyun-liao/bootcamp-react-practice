@@ -23,16 +23,20 @@ export default function SignInForm({type}:SignInFormProps){
 
         if (formInvalid) {
             setSubmitted(false);
+            setEnteredEmail('');
+            setEnteredPassword('');
             return;
         }
         
         const success = await signInCheck(enteredEmail, enteredPassword);
         if(success){
-            console.log(success)
+            // console.log(success)
             setSubmitted(true);
-            console.log(type,'log in success');
+            // console.log(type,'log in success');
         }else{
-            console.log('log in fail');
+            // console.log('log in fail');
+            setEnteredEmail('');
+            setEnteredPassword('');
             alert('log in fail');
         }
     }
