@@ -5,11 +5,9 @@ import { db } from "../../firebase.js"; // 載入 firebase 配置
 
 export default function TestFirebase(){
     
-    // ------ practice ------ 
-    // 加入件
     const specialOfTheDay = doc(db, 'dailySpecial/2021-09-14'); //集合、文檔、集合、文檔
-    // 藉由子路徑加入文件 = dailySpecial/2021-09-14/orderHistory/totalSales
     const childDoc = doc(specialOfTheDay, 'orderHistory/totalSales'); 
+    // = dailySpecial/2021-09-14/orderHistory/totalSales
     
     // 寫入內容 setDoc(doc(db, "users", "user_123"), {})
     async function writeDailySpecial(){

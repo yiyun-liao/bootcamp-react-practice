@@ -10,7 +10,7 @@ async function addExpenseData(userId:string, amount:number,desc:string){
             description: desc,
             createdAt: serverTimestamp(),
         });
-        console.log("add success", amount)
+        // console.log("add success", amount)
     } catch (error) {
         console.error("Error adding document: ", error);
     }
@@ -50,7 +50,7 @@ async function deleteExpenseData(key:string){
     try {
         await deleteDoc(doc(db, "expenses", key));
     } catch (error) {
-        console.error("Error adding document: ", error);
+        console.error("Error deleting document: ", error);
     }
 };
 

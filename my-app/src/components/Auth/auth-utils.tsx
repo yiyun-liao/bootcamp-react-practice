@@ -31,7 +31,7 @@ export async function signUpCheck(email: string, password: string) {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-      console.log(user, user.uid)
+      // console.log(user, user.uid)
   
       // 建立會員資料到 Firestore
       await setDoc(doc(db, 'users', user.uid), {
@@ -39,11 +39,11 @@ export async function signUpCheck(email: string, password: string) {
         createdAt: serverTimestamp(),
       });
 
-      await addExpenseData(user.uid, 0 ,'開始建立您的收支明細！');
+      await addExpenseData(user.uid, 0 ,'開始建立您的收支明細！');//自動建立第一筆資料
   
       return { success: true, data: { uid: user.uid } };
     } catch (error) {
-      console.error("Sign up error:", error);
+    //   console.error("Sign up error:", error);
       return { success: false, data: {message: (error as Error).message} };
     }
 }

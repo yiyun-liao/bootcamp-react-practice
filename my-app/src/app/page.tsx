@@ -5,9 +5,9 @@ import LogOutForm from '@/components/Auth/SignOutForm';
 import { useUser } from '@/components/Auth/auth-utils';
 
 
-const Page: React.FC = () => {
+const Page = () => {
     const { userData, isLoading } = useUser();
-    console.log(userData)
+    // console.log(userData)
 
     const authForm = "max-w-sm w-full";
     const styleH1 = "text-2xl text-indigo-800 font-black pb-1 m-auto text-center";
@@ -18,8 +18,8 @@ const Page: React.FC = () => {
             <section className="banner">
                 <h1 className={styleH1}>React 練習用專案</h1>
             </section>
-            {isLoading? (<p className="text-center text-2xl text-indigo-800 font-black ">Loading...</p> ): 
-            (userData?
+            {isLoading ? (<p className="text-center text-2xl text-indigo-800 font-black ">Loading...</p> ): 
+            (userData ?
             (
                 <section className={authForm}>
                     <h2 className={styleH2}>Hello {userData.email || 'user'}!</h2>

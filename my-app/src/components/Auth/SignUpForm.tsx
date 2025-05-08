@@ -12,7 +12,6 @@ export default function SignUpForm({type}:SignUpFormProps){
     const [enteredEmail, setEnteredEmail] = useState('');
     const [enteredPassword, setEnteredPassword] = useState('');
     const [submitted, setSubmitted] = useState(true);
-    // const [loinError, setLoginError] = useState('');
 
     const showEmailError = validateEmail(enteredEmail);
     const showPasswordError = validatePassword(enteredPassword);
@@ -23,15 +22,20 @@ export default function SignUpForm({type}:SignUpFormProps){
 
         if (formInvalid) {
             setSubmitted(false);
+            setEnteredEmail('');
+            setEnteredPassword('');
             return;
         }
         
         const result = await signUpCheck(enteredEmail, enteredPassword);
         if(result.success){
             setSubmitted(true);
-            console.log('sign up success:', result.data.uid);
+            // console.log('sign up success:', result.data.uid);
         }else{
+            setSubmitted(false);
             console.log('Sign up fail');
+            setEnteredEmail('');
+            setEnteredPassword('');
             alert('Sign up fail');
         }
     }
